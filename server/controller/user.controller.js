@@ -3,7 +3,8 @@ import asyncHandler from "../utiles/asyncHandler.js";
 import ApiError from "../utiles/ApiError.js";
 import ApiResponse from "../utiles/ApiResponse.js";
 import User from "../models/user.model.js";
-import uploadToCloudinary from "../utiles/cloudinary.js";
+// import uploadToCloudinary from "../utiles/cloudinary.js";
+import { uploadOnCloudinary } from "../utiles/cloudinary.js";
 
 const registerUser = asyncHandler(async (req, res, next) => {
   const { fullName, email, password } = req.body;
@@ -22,8 +23,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
   }
 
   // const avataricon = await uploadOnCloudinary(req.file.path);
-  const avataricon = await uploadToCloudinary(req.file.path);
-  // console.log(`upload `, avataricon);
+  const avataricon = await uploadOnCloudinary(req.file.path);
+  console.log(`upload `, avataricon);
   if (!avataricon) {
     throw new ApiError(400, "Avatar file is required");
   }
