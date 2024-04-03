@@ -14,8 +14,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
   const { fullName, email, password } = req.body;
 
   // Check if the data is there or not, if not throw error message
-  if (!fullName || !email || !password) {
-    throw new ApiError(400, "All fields are required");
+  if (!(fullName || email || password)) {
+    res.status(400).json("All fields are required");
   }
 
   // Check if the user exists with the provided email
@@ -23,7 +23,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
   // If user exists send the reponse
   if (userExists) {
-    throw new ApiError(409, "Email already exists");
+    res.status(410).json("Email already exists");
   }
 
   // Create new user with the given necessary data and save to DB
@@ -40,7 +40,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
   // If user not created send message response
   if (!user) {
-    throw new ApiError("User registration failed, please try again later", 400);
+    res.status(420).json("User registration failed, please try again later");
   }
 
   // Run only if user sends a file
@@ -55,10 +55,10 @@ const registerUser = asyncHandler(async (req, res, next) => {
         // Set the public_id and secure_url in DB
         user.avatar.public_id = result.public_id;
         user.avatar.secure_url = result.secure_url;
-        console.log(`what`, result);
+        // console.log(`what`, result);
       }
     } catch (error) {
-      throw new ApiError("file not uploaded", error);
+      res.status(400).json("file not uploaded", error);
     }
   }
 
@@ -84,20 +84,20 @@ const registerUser = asyncHandler(async (req, res, next) => {
 const loginUser = asyncHandler(async (req, res, next) => {
   // Destructuring the necessary data from req object
   const { email, password } = req.body;
+  console.log(email, password);
   // Check if the data is there or not, if not throw error message
-  if (!email || !password) {
-    throw new ApiError("Email and Password are required", 400);
+  if (!(email || password)) {
+    res.status(400).json("Email and Password are required");
   }
 
   // Finding the user with the sent email
   const user = await User.findOne({ email }).select("+password");
-
+  let comparePassword = await user.comparePassword(password);
   // If no user or sent password do not match then send generic response
-  if (!(user && (await user.comparePassword(password)))) {
-    throw new ApiError(
-      401,
-      "Email or Password do not match or user does not exist"
-    );
+  if (!(user && comparePassword)) {
+    res
+      .status(405)
+      .json("Email or Password do not match or user does not exist");
   }
   // Generating a JWT token
   const token = await user.generateJWTToken();
