@@ -1,11 +1,11 @@
-import { useState } from "react";
-
+import { Route, Routes } from "react-router-dom";
+import Footer from "./components/Footer";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1>heloo</h1>
+      <Routes>
+        <Route path="/" element={<Footer />} />
+      </Routes>
     </>
   );
 }
