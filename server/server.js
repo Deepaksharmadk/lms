@@ -1,11 +1,13 @@
-import databaseConnect from "./db/database.js";
+import mongoose from "mongoose";
 import app from "./app.js";
 import dotenv from "dotenv";
 import Razorpay from "razorpay";
 dotenv.config({
   path: "./.env/",
 });
-// ./.env",
+mongoose.connect(process.env.MONGO_URL).then(() => {
+  console.log("Connected to MongoDB");
+});
 // Razorpay configuration
 export const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -39,10 +41,5 @@ const uploadOnCloudinary = async (localFilePath) => {
 
 export { uploadOnCloudinary };
 app.listen(process.env.PORT, async () => {
-  try {
-    const connectdb = await databaseConnect();
-    console.log(`app listening on ${process.env.PORT}`);
-  } catch (error) {
-    console.log("app is not listening on ${process.env.PORT}", error);
-  }
+  console.log(`server is running on ${process.env.PORT}`);
 });
