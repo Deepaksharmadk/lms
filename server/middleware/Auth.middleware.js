@@ -6,6 +6,7 @@ import asyncHandler from "../utiles/asyncHandler.js";
 export const isLoggedIn = asyncHandler(async (req, res, next) => {
   // extracting token from the cookies
   const { token } = req.cookies;
+  console.log(token);
 
   // If no token send unauthorized message
   if (!token) {
@@ -14,6 +15,7 @@ export const isLoggedIn = asyncHandler(async (req, res, next) => {
 
   // Decoding the token using jwt package verify method
   const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  console.log(`hello`, decoded);
 
   // If no decode send the message unauthorized
   if (!decoded) {
@@ -22,6 +24,7 @@ export const isLoggedIn = asyncHandler(async (req, res, next) => {
 
   // If all good store the id in req object, here we are modifying the request object and adding a custom field user in it
   req.user = decoded;
+  console.log(`req user`, req.user);
 
   // Do not forget to call the next other wise the flow of execution will not be passed further
   next();
