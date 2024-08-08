@@ -10,7 +10,9 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node ./dist/index.js",
+    "build": "npm install "
   },
   "author": "deepak sharma",
   "license": "ISC",
