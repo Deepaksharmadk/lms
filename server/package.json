@@ -1,18 +1,13 @@
 {
   "name": "lms",
   "version": "1.0.0",
-  "proxy": {
-    "*": {
-      "target": "http://localhost:8000"
-    }
-  },
   "description": "",
   "type": "module",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node ./dist/index.js",
-    "build": "npm install "
+    "build": "webpack --mode production",
+    "start": "node server.js"
   },
   "author": "deepak sharma",
   "license": "ISC",
