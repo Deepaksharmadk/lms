@@ -6,8 +6,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "build": "npm install ",
-    "start": "node ./dist/index.js"
+    "build": "npm install",
+    "start": "node ./dist/server.js"
   },
   "author": "deepak sharma",
   "license": "ISC",
