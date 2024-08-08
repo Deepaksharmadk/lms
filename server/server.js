@@ -40,6 +40,3 @@ const uploadOnCloudinary = async (localFilePath) => {
 };
 
 export { uploadOnCloudinary };
-app.listen(process.env.PORT, async () => {
-  console.log(`server is running on ${process.env.PORT}`);
-});
