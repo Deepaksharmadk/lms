@@ -5,10 +5,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 app.use(
   cors({
-    origin: [
-      process.env.FRONTEND_URL,
-      "https://lms-git-main-deepaksharmadks-projects.vercel.app",
-    ],
+    origin: ["https://lms-git-main-deepaksharmadks-projects.vercel.app"],
     credentials: true,
   })
 );
